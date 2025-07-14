@@ -1,6 +1,7 @@
 import React from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import AuthForm from './components/AuthForm';
+import HomePage from './pages/HomePage';
 import Header from './components/Header';
 
 
@@ -36,8 +37,18 @@ const AuthenticatedApp = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header currentView={currentView} onViewChange={setCurrentView} />
+      <main className="py-8 px-4">
+        <div className="max-w-6xl mx-auto">
+          {currentView === 'home' && <AppContainer />}
+        </div>
+      </main>
     </div>
   );
+};
+
+
+const AppContainer = () => {
+  return <HomePage />;
 };
 
 
