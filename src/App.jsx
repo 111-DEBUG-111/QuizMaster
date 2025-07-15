@@ -3,6 +3,9 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import AuthForm from './components/AuthForm';
 import HomePage from './pages/HomePage';
 import Header from './components/Header';
+import QuizPage from './pages/QuizPage';
+import QuizSetup from './components/QuizSetup';
+import { QuizProvider, useQuiz } from './context/QuizContext';
 
 
 // Main app content with authentication
@@ -48,6 +51,21 @@ const AuthenticatedApp = () => {
 
 
 const AppContainer = () => {
+  const { state, dispatch } = useQuiz();
+  const { gameStarted, selectedCategory, questions } = state;
+  
+  // Show different screens based on state
+  if (gameStarted && selectedCategory && questions.length > 0) {
+    return <QuizPage />;
+  }
+  
+  if (selectedCategory && !gameStarted) {
+    return <QuizSetup onBack={() => {
+      // Reset the quiz state instead of reloading
+      dispatch({ type: 'RESET_GAME' });
+    }} />;
+  }
+  
   return <HomePage />;
 };
 
@@ -55,9 +73,11 @@ const AppContainer = () => {
 function App() {
   return (
     <AuthProvider>
+      <QuizProvider>
         <div className="min-h-screen bg-gray-50">
           <AuthenticatedApp />
         </div>
+      </QuizProvider>
     </AuthProvider>
   );
 }
