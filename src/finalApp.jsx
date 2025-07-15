@@ -1,12 +1,12 @@
 import React from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { QuizProvider } from './context/QuizContext';
 import AuthForm from './components/AuthForm';
-import HomePage from './pages/HomePage';
 import Header from './components/Header';
+import HomePage from './pages/HomePage';
 import QuizPage from './pages/QuizPage';
 import QuizSetup from './pages/QuizSetup';
-import { QuizProvider, useQuiz } from './context/QuizContext';
-
+import { useQuiz } from './context/QuizContext';
 
 // Main app content with authentication
 const AuthenticatedApp = () => {
@@ -49,7 +49,7 @@ const AuthenticatedApp = () => {
   );
 };
 
-
+// App container with routing based on game state
 const AppContainer = () => {
   const { state, dispatch } = useQuiz();
   const { gameStarted, selectedCategory, questions } = state;
@@ -69,7 +69,6 @@ const AppContainer = () => {
   return <HomePage />;
 };
 
-
 function App() {
   return (
     <AuthProvider>
@@ -83,4 +82,3 @@ function App() {
 }
 
 export default App;
-
