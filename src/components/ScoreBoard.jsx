@@ -3,7 +3,6 @@ import { Trophy } from 'lucide-react';
 import { useQuiz } from '../context/QuizContext';
 
 const ScoreBoard = () => {
-  
   const { state } = useQuiz();
   const { score, answers } = state;
   

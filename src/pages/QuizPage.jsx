@@ -1,17 +1,29 @@
 import React, { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import QuestionCard from '../components/QuestionCard';
 import Timer from '../components/Timer';
 import ScoreBoard from '../components/ScoreBoard';
-import ResultScreen from '../components/ResultScreen';
 import { BrainCircuit, ArrowLeft } from 'lucide-react';
 import { useQuiz } from '../context/QuizContext';
 
 const QuizPage = () => {
+  const { categoryId } = useParams();
+  const navigate = useNavigate();
   const { state, dispatch } = useQuiz();
-  const { selectedCategory, currentQuestionIndex, gameOver } = state;
+  const { selectedCategory, currentQuestionIndex, gameOver, gameStarted } = state;
   
-  // Handle case where no category is selected
-  if (!selectedCategory) return null;
+  useEffect(() => {
+    // If no game is started or category doesn't match, redirect
+    if (!gameStarted || !selectedCategory || selectedCategory.id !== categoryId) {
+      navigate('/');
+    }
+  }, [gameStarted, selectedCategory, categoryId, navigate]);
+  
+  // Handle case where no category is selected or game is over
+  if (!selectedCategory || gameOver) {
+    navigate('/results');
+    return null;
+  }
   
   const currentQuestion = state.questions[currentQuestionIndex];
   
@@ -28,13 +40,9 @@ const QuizPage = () => {
   };
   
   const handleBackToHome = () => {
-    dispatch({ type: 'RESET_GAME' });
+    navigate('/');
   };
 
-  // If game is over, show the results screen
-  if (gameOver) {
-    return <ResultScreen />;
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-8 px-4">

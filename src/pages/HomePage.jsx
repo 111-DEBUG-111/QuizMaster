@@ -1,13 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BrainCircuit } from 'lucide-react';
 import CategoryCard from '../components/CategoryCard';
 import { useQuiz } from '../context/QuizContext';
 
 const HomePage = () => {
-  const { state, dispatch } = useQuiz();
+  const { state } = useQuiz();
+  const navigate = useNavigate();
   
   const handleCategorySelect = (category) => {
-    dispatch({ type: 'SELECT_CATEGORY', payload: category });
+    navigate(`/quiz-setup/${category.id}`);
   };
 
   return (

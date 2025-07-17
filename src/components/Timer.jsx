@@ -12,7 +12,7 @@ const Timer = () => {
         dispatch({ type: 'UPDATE_TIMER', payload: timer - 1 });
       }, 1000);
     }
-
+    
     if (timer === 0 && !gameOver && gameStarted) {
       // Time's up, auto-submit with no answer
       dispatch({ 

@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { User, Mail, Lock, Eye, EyeOff, BrainCircuit } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-const AuthForm = ({ mode, onToggleMode }) => {
+const AuthForm = () => {
   const { state, login, signup, dispatch } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [mode, setMode] = useState('login');
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -12,6 +16,8 @@ const AuthForm = ({ mode, onToggleMode }) => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const from = location.state?.from?.pathname || '/';
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +29,11 @@ const AuthForm = ({ mode, onToggleMode }) => {
     }
   };
 
+  const toggleMode = () => {
+    setMode(mode === 'login' ? 'signup' : 'login');
+    dispatch({ type: 'CLEAR_ERROR' });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -31,9 +42,15 @@ const AuthForm = ({ mode, onToggleMode }) => {
         dispatch({ type: 'SIGNUP_FAILURE', payload: 'Passwords do not match' });
         return;
       }
-      await signup(formData.username, formData.email, formData.password);
+      const success = await signup(formData.username, formData.email, formData.password);
+      if (success) {
+        navigate(from, { replace: true });
+      }
     } else {
-      await login(formData.email, formData.password);
+      const success = await login(formData.email, formData.password);
+      if (success) {
+        navigate(from, { replace: true });
+      }
     }
   };
 
@@ -168,7 +185,7 @@ const AuthForm = ({ mode, onToggleMode }) => {
             <p className="text-gray-600">
               {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
               <button
-                onClick={onToggleMode}
+                onClick={toggleMode}
                 className="text-purple-600 hover:text-purple-700 font-medium"
               >
                 {mode === 'login' ? 'Sign up' : 'Sign in'}

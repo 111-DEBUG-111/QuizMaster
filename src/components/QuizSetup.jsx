@@ -1,43 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Settings, Play, ArrowLeft } from 'lucide-react';
 import { useQuiz } from '../context/QuizContext';
 import { fetchTriviaQuestions } from '../services/triviaApi';
 
-const QuizSetup = () => {
-  const { categoryId } = useParams();
-  const navigate = useNavigate();
+const QuizSetup = ({ onBack }) => {
   const { state, dispatch } = useQuiz();
   const [numberOfQuestions, setNumberOfQuestions] = useState(10);
   const [difficulty, setDifficulty] = useState('any');
   
-  const { isLoading, error } = state;
+  const { selectedCategory, isLoading, error } = state;
   
-  // Find the selected category based on the URL parameter
-  const selectedCategory = state.categories.find(cat => cat.id === categoryId);
-  
-  useEffect(() => {
-    if (!selectedCategory) {
-      navigate('/');
-      return;
-    }
-    
-    // Set the selected category in the context
-    dispatch({ type: 'SELECT_CATEGORY', payload: selectedCategory });
-  }, [selectedCategory, dispatch, navigate]);
-  
-  if (!selectedCategory) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  if (!selectedCategory) return null;
   
   const handleStartQuiz = async () => {
+    if (!selectedCategory) return;
+    
     dispatch({ type: 'SET_LOADING', payload: true });
     dispatch({ type: 'SET_ERROR', payload: null });
     dispatch({ type: 'SET_NUMBER_OF_QUESTIONS', payload: numberOfQuestions });
@@ -51,7 +28,6 @@ const QuizSetup = () => {
       
       dispatch({ type: 'SET_QUESTIONS', payload: questions });
       dispatch({ type: 'START_GAME' });
-      navigate(`/quiz/${categoryId}`);
     } catch (err) {
       dispatch({ 
         type: 'SET_ERROR', 
@@ -60,16 +36,12 @@ const QuizSetup = () => {
     }
   };
   
-  const handleBack = () => {
-    navigate('/');
-  };
-  
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-8 px-4">
       <div className="max-w-2xl mx-auto">
         <header className="flex items-center mb-8">
           <button 
-            onClick={handleBack}
+            onClick={onBack}
             className="flex items-center text-gray-600 hover:text-gray-900 mr-4"
           >
             <ArrowLeft className="w-5 h-5 mr-1" />
