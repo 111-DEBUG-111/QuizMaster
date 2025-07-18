@@ -14,13 +14,13 @@ const ScoreBoard = () => {
   let performanceColor = "text-purple-600";
   
   if (totalAnswers > 0) {
-    if (percentage >= 80) {
+    if (percentage >= 60) {
       performanceMessage = "Excellent!";
       performanceColor = "text-green-600";
-    } else if (percentage >= 60) {
+    } else if (percentage >= 40) {
       performanceMessage = "Good job!";
       performanceColor = "text-blue-600";
-    } else if (percentage >= 40) {
+    } else if (percentage >= 20) {
       performanceMessage = "Keep practicing!";
       performanceColor = "text-yellow-600";
     } else {

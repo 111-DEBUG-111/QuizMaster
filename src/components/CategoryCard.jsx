@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlaskRound as Flasks, History, Music as MusicNote, Globe, Trophy, Gamepad2, BookOpen, Lightbulb } from 'lucide-react';
+import { FlaskRound as Flasks, History, Music as MusicNote, Globe, Trophy, Gamepad2, BookOpen, Lightbulb,Vote,BookA} from 'lucide-react';
 
 const CategoryCard = ({ category, onSelect }) => {
   // Map category icon string to component
@@ -21,6 +21,10 @@ const CategoryCard = ({ category, onSelect }) => {
         return <BookOpen className="h-8 w-8 mb-2" />;
       case 'Lightbulb':
         return <Lightbulb className="h-8 w-8 mb-2" />;
+      case 'vote':
+        return <Vote className="h-8 w-8 mb-2" />;
+      case 'book-a':
+        return <BookA className="h-8 w-8 mb-2" />;
       default:
         return <Lightbulb className="h-8 w-8 mb-2" />;
     }
