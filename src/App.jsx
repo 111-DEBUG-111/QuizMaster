@@ -50,6 +50,7 @@ const AuthRoute = ({ children }) => {
 const AppContent = () => {
   return (
     <Routes>
+
       <Route 
         path="/auth" 
         element={
@@ -58,6 +59,7 @@ const AppContent = () => {
           </AuthRoute>
         } 
       />
+
       <Route 
         path="/" 
         element={
@@ -73,6 +75,7 @@ const AppContent = () => {
           </ProtectedRoute>
         } 
       />
+
       <Route 
         path="/quiz-setup/:categoryId" 
         element={
@@ -88,6 +91,7 @@ const AppContent = () => {
           </ProtectedRoute>
         } 
       />
+
       <Route 
         path="/quiz/:categoryId" 
         element={
@@ -103,6 +107,7 @@ const AppContent = () => {
           </ProtectedRoute>
         } 
       />
+
       <Route 
         path="/results" 
         element={
@@ -118,6 +123,7 @@ const AppContent = () => {
           </ProtectedRoute>
         } 
       />
+
       <Route 
         path="/profile" 
         element={
@@ -133,7 +139,9 @@ const AppContent = () => {
           </ProtectedRoute>
         } 
       />
+
       <Route path="*" element={<Navigate to="/" replace />} />
+
     </Routes>
   );
 };
