@@ -34,7 +34,7 @@ const Header = () => {
             className="flex items-center hover:opacity-80 transition-opacity"
           >
             <BrainCircuit className="w-8 h-8 text-purple-600 mr-2" />
-            <h1 className="text-xl font-bold text-gray-800">QuizWhiz</h1>
+            <h1 className="text-xl font-bold text-gray-800">QuizMaster</h1>
           </button>
 
           {/* Desktop Navigation */}

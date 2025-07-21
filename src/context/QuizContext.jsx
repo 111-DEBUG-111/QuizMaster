@@ -71,7 +71,7 @@ const quizReducer = (state, action) => {
       // Calculate points based on time spent and correctness
       const maxPoints = 100;
       const timeRatio = Math.max(0, 1 - timeSpent / 15);
-      const points = isCorrect ? Math.round(maxPoints * (0.9 + 0.1 * timeRatio)) : 0;
+      const points = isCorrect ? Math.round(maxPoints * (0.3 + 0.7 * timeRatio)) : 0;
       
       const answer = {
         questionId: currentQuestion.id,

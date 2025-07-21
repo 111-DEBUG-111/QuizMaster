@@ -60,7 +60,7 @@ const AuthForm = () => {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
             <BrainCircuit className="w-12 h-12 text-purple-600 mr-2" />
-            <h1 className="text-3xl font-bold text-gray-800">QuizWhiz</h1>
+            <h1 className="text-3xl font-bold text-gray-800">QuizMaster</h1>
           </div>
           <h2 className="text-xl text-gray-600">
             {mode === 'login' ? 'Welcome back!' : 'Join the quiz community'}
